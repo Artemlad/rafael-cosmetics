@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Рафаэль — Лаборатория Красоты: косметика с наночастицами 24К золота: линия «Возрождение», тоник и омолаживающий крем.">
+    <title>Рафаэль | Лаборатория Красоты</title>
+    <style>
+        :root {
+            --text-main: #2e3d2f;
+            --text-light: #5a6b58;
+            --accent: #7c8f5a;
+            --accent-hover: #64743f;
+            --gold: #c9a34e;        /* Золотой для заголовков */
+            --gold-stroke: #202a1e; /* Тёмный контур для читаемости на фоне */
+            --card: rgba(255, 255, 255, 0.88);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Georgia', serif;
+            color: var(--text-main);
+            line-height: 1.8;
+            background-image: url('img/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(20, 35, 20, 0.35), rgba(20, 35, 20, 0.15));
+            z-index: -1;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-content {
+            color: #fff;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero h1 {
+            font-size: 42px;
+            margin: 0;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--gold);
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.8),
+                        -1px -1px 0px var(--gold-stroke),
+                        1px -1px 0px var(--gold-stroke),
+                        -1px 1px 0px var(--gold-stroke),
+                        1px 1px 0px var(--gold-stroke);
+        }
+        .hero h1 a {
+            color: var(--gold);
+            text-decoration: none;
+            display: inline-block;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .hero h1 a:hover {
+            border-bottom: 2px solid var(--gold);
+            transform: scale(1.03);
+        }
+
+        .hero-symbol {
+            margin: 25px auto 0;
+            width: 110px;
+            height: 110px;
+        }
+        .hero-symbol svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            font-style: italic;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.8);
+        }
+
+        .glass {
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(20, 35, 20, 0.18);
+        }
+
+        .about {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 40px;
+            text-align: center;
+        }
+        .about h2 {
+            font-size: 28px;
+            color: var(--gold);
+            font-weight: normal;
+            font-style: italic;
+            margin: 0 0 30px;
+        }
+        .about p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin: 0 0 20px;
+        }
+
+        .category-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--gold);
+            margin-top: 60px;
+            margin-bottom: 10px;
+            font-weight: normal;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+        }
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--gold);
+            margin: 15px auto 0;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery-item {
+            display: block;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 450px;
+            box-shadow: 0 10px 20px rgba(20, 35, 20, 0.25);
+            text-decoration: none;
+            cursor: zoom-in;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(46, 61, 47, 0.7);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 22px;
+            font-style: italic;
+            letter-spacing: 2px;
+            padding: 20px;
+            flex-direction: column;
+            pointer-events: none;
+        }
+        .gallery-item:hover .overlay { opacity: 1; }
+        .gallery-item .zoom-hint {
+            font-size: 13px;
+            font-family: 'Segoe UI', sans-serif;
+            font-style: normal;
+            letter-spacing: 1px;
+            opacity: 0.85;
+            margin-top: 10px;
+        }
+
+        .desc-block {
+            text-align: center;
+            margin: 10px auto 50px;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+        .desc-block p {
+            color: #fff;
+            font-size: 17px;
+            margin: 0 0 18px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+        .btn-desc {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 6px 14px rgba(20, 35, 20, 0.3);
+        }
+        .btn-desc:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .product-page {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 40px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.6s ease;
+        }
+        .product-page.open {
+            max-height: 2500px;
+            opacity: 1;
+            padding: 40px;
+        }
+        .product-page h2 {
+            font-size: 30px;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin: 0 0 5px;
+        }
+        .product-page .subtitle {
+            color: var(--gold);
+            font-style: italic;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .product-page h3 {
+            font-size: 22px;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 40px;
+        }
+        .product-page p { color: var(--text-light); }
+        .product-page ul { padding-left: 0; list-style: none; }
+        .product-page ul li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 14px;
+            color: var(--text-light);
+        }
+        .product-page ul li::before {
+            content: '❧';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .product-page ul li strong { color: var(--text-main); }
+        table.specs {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        table.specs td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #dfe3d4;
+            color: var(--text-light);
+        }
+        table.specs td:first-child {
+            color: var(--text-main);
+            width: 40%;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 30, 18, 0.92);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            padding: 30px;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        .contact {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 60px 40px;
+        }
+        .contact h2 {
+            font-size: 26px;
+            margin: 0 0 20px;
+            color: var(--gold);
+            font-style: italic;
+        }
+        .contact p { color: var(--text-light); }
+        .contact-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 15px 40px;
+            background-color: transparent;
+            color: var(--text-main);
+            text-decoration: none;
+            border: 2px solid var(--text-main);
+            border-radius: 30px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        .contact-btn:hover {
+            background-color: var(--text-main);
+            color: #fff;
+        }
+        /* Контакты: крупные, хорошо читаемые */
+        .contact-info {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .contact-info .contact-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin: 0;
+        }
+        .contact-info a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 22px;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body { background-attachment: scroll; }
+            .hero h1 { font-size: 28px; }
+            .hero-symbol { width: 85px; height: 85px; }
+            .hero p { font-size: 16px; }
+            .gallery-item { height: 350px; }
+            .gallery { grid-template-columns: 1fr; }
+            .gallery-item .overlay { opacity: 1; background: rgba(46, 61, 47, 0.55); }
+            .about, .product-page, .contact { padding: 24px; }
+            .product-page.open { padding: 24px; }
+            .contact-info a { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <h1><a href="#gallery">Рафаэль Лаборатория Красоты</a></h1>
+
+            <div class="hero-symbol">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#8a6d2f"/>
+                            <stop offset="35%" stop-color="#d4b04a"/>
+                            <stop offset="65%" stop-color="#f0d98a"/>
+                            <stop offset="100%" stop-color="#a8853a"/>
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="50" cy="27" rx="11" ry="20" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+                    <ellipse cx="50" cy="73" rx="11" ry="20" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+                    <ellipse cx="27" cy="50" rx="20" ry="11" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+                    <ellipse cx="73" cy="50" rx="20" ry="11" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+                    <circle cx="50" cy="50" r="13" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+                </svg>
+            </div>
+
+            <p>Питание • Омоложение день за днем</p>
+        </div>
+    </header>
+
+    <section class="about glass">
+        <h2>Эстетика в каждой капле</h2>
+        <p>Мы создаем косметику, которая работает в гармонии с вашей кожей. Вдохновленные силой природы и передовыми лабораторными разработками, мы объединили натуральные компоненты и наночастицы 24К золота для достижения видимого результата.</p>
+        <p>Наш подход — это не просто уход, это ежедневный ритуал заботы о себе.</p>
+    </section>
+
+    <!-- ================= ТОНИК ================= -->
+    <h2 class="category-title" id="gallery">Линия «Возрождение»: Тоник</h2>
+    <section class="gallery">
+        <a href="#" class="gallery-item">
+            <img src="img/product1.jpg" alt="Активный увлажняющий тоник с наночастицами 24К золота на серых камнях" loading="lazy" data-full="img/product1.jpg">
+            <div class="overlay">
+                Активация увлажнения
+                <span class="zoom-hint">Нажмите, чтобы увеличить фото</span>
+            </div>
+        </a>
+        <a href="#" class="gallery-item">
+            <img src="img/product5.jpg" alt="Тоник с наночастицами золота в ванной комнате" loading="lazy" data-full="img/product5.jpg">
+            <div class="overlay">
+                Ровный тон и защита
+                <span class="zoom-hint">Нажмите, чтобы увеличить фото</span>
+            </div>
+        </a>
+        <a href="#" class="gallery-item">
+            <img src="img/product4.jpg" alt="Тоник линии «Возрождение» на фоне зелёного мха" loading="lazy" data-full="img/product4.jpg">
+            <div class="overlay">
+                Тоник в природе
+                <span class="zoom-hint">Нажмите, чтобы увеличить фото</span>
+            </div>
+        </a>
+    </section>
+
+    <div class="desc-block">
+        <p>2 ступень к вашему совершенству — активный увлажняющий тоник с наночастицами 24К золота. Подходит для всех типов кожи.</p>
+        <button class="btn-desc" data-target="tonic">Показать описание тоника</button>
+    </div>
+
+    <!-- ================= КРЕМ ================= -->
+    <h2 class="category-title">Линия «Возрождение»: Крем</h2>
+    <section class="gallery">
+        <a href="#" class="gallery-item">
+            <img src="img/product3.jpg" alt="Вечерний омолаживающий крем с наночастицами золота и витамином C на чёрном фоне" loading="lazy" data-full="img/product3.jpg">
+            <div class="overlay">
+                Омолаживающий крем
+                <span class="zoom-hint">Нажмите, чтобы увеличить фото</span>
+            </div>
+        </a>
+        <a href="#" class="gallery-item">
+            <img src="img/product2.jpg" alt="Девушка с сияющей увлажнённой кожей после нанесения крема" loading="lazy" data-full="img/product2.jpg">
+            <div class="overlay">
+                Сияние и увлажнение
+                <span class="zoom-hint">Нажмите, чтобы увеличить фото</span>
+            </div>
+        </a>
+    </section>
+
+    <div class="desc-block">
+        <p>Вечерний омолаживающий крем с наночастицами золота и витамином C. Напитает и преобразит вашу кожу.</p>
+        <button class="btn-desc" data-target="cream">Показать описание крема</button>
+    </div>
+
+    <!-- ================= ОПИСАНИЕ ТОНИКА (скрыто до клика) ================= -->
+    <section class="product-page glass" id="tonic">
+        <h2>2 ступень к вашему совершенству: Активация увлажнения</h2>
+        <p class="subtitle">Активный увлажняющий тоник с наночастицами 24К золота</p>
+        <p>Средство для ежедневного применения, придающее коже свежесть. Улучшает кислородный обмен и подготавливает кожу к нанесению последующих средств линии «Возрождение». Подходит для всех типов кожи. Завершает этап очищения и придаёт коже ощущение чистоты и тонуса. Благодаря лёгкой жидкой текстуре нанесение средства комфортно и приятно.</p>
+
+        <h3>Активные компоненты</h3>
+        <ul>
+            <li><strong>Наночастицы 24К золота</strong> — стимулируют выработку коллагена, повышают упругость кожи, помогают бороться с первыми признаками старения и поддерживают чёткость овала лица.</li>
+            <li><strong>Токоферол (витамин E)</strong> — оказывает антиоксидантное действие, защищает кожу от внешних факторов и поддерживает её увлажнённость.</li>
+            <li><strong>Экстракт зелёного чая</strong> — успокаивает кожу и придаёт ей тонус.</li>
+            <li><strong>Низкомолекулярная гиалуроновая кислота</strong> — проникает глубже, интенсивно увлажняет, выравнивает тон и замедляет проявление возрастных изменений.</li>
+            <li><strong>Инулин</strong> — способствует удержанию влаги, создаёт на поверхности кожи лёгкую защитную плёнку и улучшает проникновение активных веществ.</li>
+            <li><strong>Пантенол</strong> — снимает раздражение, защищает от неблагоприятных факторов среды.</li>
+            <li><strong>Аллантоин</strong> — смягчает кожу, способствует увлажнению и помогает поддерживать поры в спокойном состоянии.</li>
+        </ul>
+
+        <h3>Способ применения</h3>
+        <p>Наносить утром и вечером на очищенную кожу лица, шеи и зоны вокруг глаз с помощью ватного диска.</p>
+
+        <h3>Характеристики</h3>
+        <table class="specs">
+            <tr><td>Меры предосторожности</td><td>Возможна индивидуальная непереносимость компонентов</td></tr>
+            <tr><td>Условия хранения</td><td>При температуре от +5 до +25 °C</td></tr>
+            <tr><td>Срок годности</td><td>24 месяца, после вскрытия — 18 месяцев</td></tr>
+        </table>
+    </section>
+
+    <!-- ================= ОПИСАНИЕ КРЕМА (скрыто до клика) ================= -->
+    <section class="product-page glass" id="cream">
+        <h2>Омолаживающий крем</h2>
+        <p class="subtitle">С наночастицами золота и витамином C. Напитает и преобразит вашу кожу</p>
+
+        <h3>Активные компоненты</h3>
+        <ul>
+            <li><strong>Наночастицы золота</strong> — «транспортный агент»: доставляют вещества глубоко в кожу; при длительном использовании помогают выработке коллагена.</li>
+            <li><strong>Витамин C</strong> — стабилизирован на наночастицах золота, не распадается при контакте с воздухом и солнечным светом.</li>
+            <li><strong>Масло виноградной косточки</strong> — повышает упругость, увлажняет, подтягивает овал лица, защищает от воздействия окружающей среды.</li>
+            <li><strong>Экстракт виноградной косточки</strong> — помогает стабилизировать выработку коллагена и эластина.</li>
+            <li><strong>Экстракт амаранта</strong> — поддерживает увлажнённость, эластичность и упругость кожи.</li>
+            <li><strong>Витамин E</strong> — повышает упругость, помогает поддерживать уровень влаги.</li>
+        </ul>
+    </section>
+
+    <!-- ================= КОНТАКТЫ ================= -->
+    <section class="contact glass">
+        <h2>Связаться с нами</h2>
+        <p>Если вы хотите узнать больше о нашей косметике или задать вопрос, свяжитесь любым удобным способом.</p>
+
+        <div class="contact-info">
+            <p class="contact-label">Телефон</p>
+            <a href="tel:+79219020070">+7 (921) 902-00-70</a>
+            <p class="contact-label">Почта</p>
+            <a href="mailto:saldaevartem@gmail.com">saldaevartem@gmail.com</a>
+        </div>
+
+        <a href="https://t.me/rafael_laboratory_cosmetic_bot" class="contact-btn" target="_blank" rel="noopener noreferrer">Написать нам в Telegram</a>
+    </section>
+
+    <!-- ЛАЙТБОКС -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" title="Закрыть">×</span>
+        <img src="" alt="Просмотр фотографии в полном размере" id="lightbox-img">
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // Лайтбокс: клик по картинке — полный размер
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', function (e) {
+                e.preventDefault();
+                lightboxImg.src = this.dataset.full || this.src;
+                lightbox.classList.add('open');
+            });
+        });
+        lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') lightbox.classList.remove('open');
+        });
+
+        // Аккордеон: показать/скрыть описание + плавная прокрутка к секции
+        document.querySelectorAll('.btn-desc').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const target = document.getElementById(this.dataset.target);
+                const isOpen = target.classList.toggle('open');
+                this.textContent = isOpen
+                    ? 'Скрыть описание'
+                    : 'Показать описание ' + (this.dataset.target === 'tonic' ? 'тоника' : 'крема');
+                if (isOpen) {
+                    // Небольшая задержка, чтобы секция успела начать раскрытие
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 150);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
