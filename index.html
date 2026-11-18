@@ -11,8 +11,8 @@
             --text-light: #5a6b58;
             --accent: #7c8f5a;
             --accent-hover: #64743f;
-            --gold: #c9a34e;        /* Золотой для заголовков */
-            --gold-stroke: #202a1e; /* Тёмный контур для читаемости на фоне */
+            --gold: #c9a34e;
+            --gold-stroke: #202a1e;
             --card: rgba(255, 255, 255, 0.88);
         }
 
@@ -23,18 +23,30 @@
             font-family: 'Georgia', serif;
             color: var(--text-main);
             line-height: 1.8;
-            background-image: url('img/bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            /* УБРАЛИ background-image отсюда, чтобы не дублировать и не ломать адаптив */
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
+        /* ===== ГЛАВНОЕ ИСПРАВЛЕНИЕ: ФОН ===== */
         body::before {
+            content: '';
+            position: fixed; /* Фиксируем фон относительно окна, а не страницы */
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('img/bg.jpg'); /* Путь к твоему фото леса */
+            background-size: cover; /* ГЛАВНОЕ: заполняет экран без искажений */
+            background-position: center; /* Центрирует композицию */
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        /* Затемнение поверх фона для читаемости текста */
+        body::after {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(20, 35, 20, 0.35), rgba(20, 35, 20, 0.15));
+            background: linear-gradient(180deg, rgba(20, 35, 20, 0.45), rgba(20, 35, 20, 0.25));
             z-index: -1;
         }
 
@@ -363,7 +375,6 @@
             background-color: var(--text-main);
             color: #fff;
         }
-        /* Контакты: крупные, хорошо читаемые */
         .contact-info {
             margin-top: 30px;
             display: flex;
@@ -396,13 +407,14 @@
         }
 
         @media (max-width: 768px) {
-            body { background-attachment: scroll; }
+            /* УБРАЛИ background-attachment: scroll, теперь это не нужно */
             .hero h1 { font-size: 28px; }
             .hero-symbol { width: 85px; height: 85px; }
             .hero p { font-size: 16px; }
             .gallery-item { height: 350px; }
             .gallery { grid-template-columns: 1fr; }
-            .gallery-item .overlay { opacity: 1; background: rgba(46, 61, 47, 0.55); }
+            /* На мобильном делаем оверлей всегда видимым или чуть прозрачнее, чтобы не перекрывать фото полностью */
+            .gallery-item .overlay { opacity: 0.9; background: rgba(46, 61, 47, 0.65); }
             .about, .product-page, .contact { padding: 24px; }
             .product-page.open { padding: 24px; }
             .contact-info a { font-size: 18px; }
@@ -566,7 +578,6 @@
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
-        // Лайтбокс: клик по картинке — полный размер
         document.querySelectorAll('.gallery-item img').forEach(img => {
             img.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -579,7 +590,6 @@
             if (e.key === 'Escape') lightbox.classList.remove('open');
         });
 
-        // Аккордеон: показать/скрыть описание + плавная прокрутка к секции
         document.querySelectorAll('.btn-desc').forEach(btn => {
             btn.addEventListener('click', function () {
                 const target = document.getElementById(this.dataset.target);
@@ -588,7 +598,6 @@
                     ? 'Скрыть описание'
                     : 'Показать описание ' + (this.dataset.target === 'tonic' ? 'тоника' : 'крема');
                 if (isOpen) {
-                    // Небольшая задержка, чтобы секция успела начать раскрытие
                     setTimeout(() => {
                         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 150);
