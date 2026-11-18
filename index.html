@@ -333,7 +333,7 @@
             width: 40%;
         }
 
-        /* ===== ВИДЕО БЛОК (исправлен черный фон) ===== */
+        /* ===== ВИДЕО БЛОК ===== */
         .video-container {
             max-width: 800px;
             margin: 0 auto 40px;
@@ -342,33 +342,19 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            /* Высота подстраивается, но без черных полос: 
-               мы используем aspect-ratio и обрезаем края через transform */
             aspect-ratio: 16 / 9; 
             overflow: hidden;
             border-radius: 14px;
             box-shadow: 0 10px 30px rgba(20, 35, 20, 0.3);
             background: #000;
         }
-        /* Для локального видео — обрезаем края */
+        /* Стили для локального видео */
         .video-wrapper video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-        /* Для iframe — масштабируем, чтобы убрать черные полосы */
-      .video-wrapper iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            transform: translate(-50%, -50%) scale(1.8);
-            transform-origin: center center;
-            border: none;
-        }
-        
 
         /* ===== ЛАЙТБОКС ===== */
         .lightbox {
@@ -604,21 +590,15 @@
     </section>
 
     <div class="desc-block">
-        <p>Вечерний омолаживающий крем с наночастицами золота и витамином C. Напитает и преобразит вашу кожу.</p>
+        <p>Омолаживающий крем с наночастицами золота и витамином C. Напитает и преобразит вашу кожу.</p>
         <button class="btn-desc" data-target="cream">Показать описание крема</button>
     </div>
 
-    <!-- ================= НОВОЕ: ВИДЕО (поднято выше описания крема) ================= -->
+    <!-- ================= ВИДЕО (над описанием крема) ================= -->
     <section class="video-container">
         <div class="video-wrapper">
-            <!-- ВСТАВЬТЕ СЮДА ВАШЕ ВИДЕО. 
-                 Для YouTube/Rutube: <iframe src="https://www.youtube.com/embed/ВАШ_ID" ...></iframe>
-                 Для локального файла: <video controls src="video/cream.mp4"></video>
-                 
-                 ПРИМЕЧАНИЕ: Если у iframe остаются черные полосы, увеличьте width и height в CSS 
-                 (сейчас 130%). Например, до 140% или 150%.
-            -->
-            <iframe src="img\видеоокрема.MP4" title="Видео о креме" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!-- Локальное видео. Убедись, что файл называется cream.mp4 и лежит в папке img -->
+            <video controls playsinline src="img/cream.mp4"></video>
         </div>
     </section>
 
